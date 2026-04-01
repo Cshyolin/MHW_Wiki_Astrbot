@@ -6,7 +6,7 @@
 
 # Functions
 
-使用 '/mhws <keyword>' 查询，当前版本仅能使用英文查询怪物的描述（在更新了在更新了）
+使用 `/mhws <keyword>` 查询，当前版本仅能使用英文查询怪物的描述（在更新了在更新了）
 
 数据来自 Monster Hunter World API （见下）
 
