@@ -3,7 +3,7 @@ from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
 from pydantic.dataclasses import dataclass
 import asyncio
-import adapters.api_adapter
+import .adapters.api_adapter
 
 @register("MHWSearch", "Cshyolin", "一个简单的搜索怪物猎人世界Wiki插件", "1.0.1")
 class MHWSearch(Star):
