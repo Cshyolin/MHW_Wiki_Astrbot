@@ -1,9 +1,11 @@
 from astrbot.api.event import filter, AstrMessageEvent, MessageEventResult
 from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
+from pydantic.dataclasses import dataclass
+from api_adapter.py import MHWDBMonstersSearchClient
 
-@register("helloworld", "YourName", "一个简单的 Hello World 插件", "1.0.0")
-class MyPlugin(Star):
+@register("MHWSearch", "Cshyolin", "一个简单的搜索怪物猎人世界Wiki插件", "1.0.1")
+class MHWSearch(Star):
     def __init__(self, context: Context):
         super().__init__(context)
 
@@ -22,3 +24,18 @@ class MyPlugin(Star):
 
     async def terminate(self):
         """可选择实现异步的插件销毁方法，当插件被卸载/停用时会调用。"""
+
+    @filter.command("mhws")
+    async def search(self,event: AstrMessageEvent,key:str):    
+        """搜索怪物猎人世界百科"""
+        user_name=event.get_sender_name()
+        #message=event.message_str
+        yield event.plain_result(f"Hello {user_name},你尝试搜索了{key}")
+        res=MHWDBMonstersSearchClient.main(key)
+        umo = event.unified_msg_origin
+        provider_id = await self.context.get_current_chat_provider_id(umo=umo)
+        llm_resp = await self.context.llm_generate(
+            chat_provider_id=provider_id, # 聊天模型 ID
+            prompt=f"请用中文翻译有关怪物猎人世界的如下内容：{res}",
+        )
+        yield event.plain_result(llm_resp.completion_text)
