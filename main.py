@@ -38,6 +38,6 @@ class MHWSearch(Star):
         provider_id = await self.context.get_current_chat_provider_id(umo=umo)
         llm_resp = await self.context.llm_generate(
             chat_provider_id=provider_id, # 聊天模型 ID
-            prompt=f"请用中文翻译有关怪物猎人世界的如下内容：{res}",
+            prompt=f"Please describe the following Monster Hunter World content in English, avoid using any markdown syntax nor formatting:{res}",
         )
         yield event.plain_result(llm_resp.completion_text)
