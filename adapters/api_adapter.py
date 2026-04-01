@@ -97,7 +97,7 @@ def print_monsters_results(keyword: str, monsters: List[Dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
-async def main(keyword: str) -> str:
+async def searcher(keyword: str) -> str:
     """主函数，输入关键词，输出搜索结果字符串"""
     limit = 10
     async with MHWDBMonstersSearchClient(timeout=20) as client:
