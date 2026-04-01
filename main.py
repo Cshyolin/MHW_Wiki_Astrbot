@@ -3,7 +3,7 @@ from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
 from pydantic.dataclasses import dataclass
 import asyncio
-from . import api_adapter
+import adapters.api_adapter
 
 @register("MHWSearch", "Cshyolin", "一个简单的搜索怪物猎人世界Wiki插件", "1.0.1")
 class MHWSearch(Star):
@@ -33,7 +33,7 @@ class MHWSearch(Star):
         #message=event.message_str
         yield event.plain_result(f"Hello {user_name},你尝试搜索了{key}")
         # 读取 api_adapter.py 中 main() 的返回值（它是 async 函数，需 await）
-        res = await api_adapter.main(key)
+        res = await adapters.api_adapter.main(key)
         umo = event.unified_msg_origin
         provider_id = await self.context.get_current_chat_provider_id(umo=umo)
         llm_resp = await self.context.llm_generate(
