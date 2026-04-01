@@ -2,7 +2,7 @@ from astrbot.api.event import filter, AstrMessageEvent, MessageEventResult
 from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
 from pydantic.dataclasses import dataclass
-from api_adapter.py import MHWDBMonstersSearchClient
+from .api_adapter import MHWDBMonstersSearchClient
 
 @register("MHWSearch", "Cshyolin", "一个简单的搜索怪物猎人世界Wiki插件", "1.0.1")
 class MHWSearch(Star):
