@@ -182,7 +182,7 @@ class MHWSearch(Star):
             f"{plain_text}\n"
             "【表格部分(markdown)】\n"
             f"{tables_md}\n"
-            f"用户希望了解这些内容中关于{key}的内容。请选取其中与之有关的内容，以自然语言复述。复述数据时不得修改数据"
+            f"用户希望了解这些内容中关于{key}的内容。请选取其中与之有关的内容，以自然语言复述。复述数据时不得修改数据，不需要总结要点"
         )
         umo = event.unified_msg_origin
         provider_id = await self.context.get_current_chat_provider_id(umo=umo)
