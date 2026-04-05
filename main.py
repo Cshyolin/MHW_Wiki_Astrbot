@@ -3,7 +3,7 @@ from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
 from pydantic.dataclasses import dataclass
 import asyncio
-from .adapters import apiGate,wikiSearch
+from .adapters import api_adapter,wikiSearch
 from typing import List,Dict,Any
 
 from typing import Any
