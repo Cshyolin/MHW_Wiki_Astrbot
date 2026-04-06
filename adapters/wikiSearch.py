@@ -211,6 +211,8 @@ class NewSearcher:
 async def runner(name:str,url:str):
     x=NewSearcher()
     content_url=await x.search_in_page(name,url)
+    if content_url is None:
+        return None,None
     html=await x.fetch_html(content_url)
     content=x.extract_text(html)
     plain_text = content["plain_text"]
