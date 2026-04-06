@@ -3,7 +3,7 @@ from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
 from pydantic.dataclasses import dataclass
 import asyncio
-from .adapters import api_adapter,wikiSearch
+from .adapters import wikiSearch,api_adapter
 from typing import List,Dict,Any
 
 from typing import Any
@@ -155,7 +155,7 @@ class MHWSearch(Star):
         #message=event.message_str
         yield event.plain_result(f"Hello {user_name},你尝试搜索了{key}")
         # 读取 api_adapter.py 中 main() 的返回值（它是 async 函数，需 await）
-        res = await apiGate.searcher(key)
+        res = await api_adapter.searcher(key)
         umo = event.unified_msg_origin
         provider_id = await self.context.get_current_chat_provider_id(umo=umo) # type: ignore
         llm_resp = await self.context.llm_generate( # type: ignore
@@ -174,6 +174,9 @@ class MHWSearch(Star):
         yield event.plain_result(f"你好，{user_name}，我已开始搜索，这可能会花一些时间！")
         #读取返回的正文文本内容
         plain_text,tables=await wikiSearch.runner(name,self.url)
+        if plain_text is None:
+            yield event.plain_result("无返回结果！请检查是否拼写有误")
+            return
         yield event.plain_result("已获取相关数据！大模型生成中...")
         tables_md=_tables_to_markdown(tables,key)
         prompt_body=(
@@ -192,4 +195,3 @@ class MHWSearch(Star):
         )
         yield event.plain_result(llm_resp.completion_text)
         yield event.plain_result("除数据外一切内容由LLM生成，请注意甄别！")
-
